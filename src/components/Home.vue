@@ -19,12 +19,13 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import uuid from 'uuid/v4'
 
 export default {
   name: 'Home',
   data () {
     return {
-      room: '',
+      room: uuid(),
       name: ''
     }
   },
@@ -36,6 +37,13 @@ export default {
 
     join () {
       this.setMeName(this.name)
+
+      this.$router.push({
+        name: 'room',
+        params: {
+          room: this.room
+        }
+      })
     }
   }
 }

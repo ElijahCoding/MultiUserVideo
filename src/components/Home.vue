@@ -1,14 +1,14 @@
 <template>
   <div class="home">
-    <form action="#" class="join">
+    <form action="#" class="join" @submit.prevent="join">
 
       <h1>Start chatting.</h1>
 
       <label for="room" class="label">Room ID</label>
-      <input type="text" class="input" name="room" placeholder="e.g. ABC-123-456">
+      <input type="text" class="input" name="room" placeholder="e.g. ABC-123-456" v-model.trim="room">
 
       <label for="name" class="label">Your name</label>
-      <input type="text" class="input" name="name" placeholder="e.g.Elijah" >
+      <input type="text" class="input" name="name" placeholder="e.g.Elijah" v-model.trim="name">
 
       <button type="submit" class="button button--primary">
         Join
@@ -18,11 +18,24 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Home',
   data () {
     return {
+      room: '',
+      name: ''
+    }
+  },
 
+  methods: {
+    ...mapMutations({
+      setMeName: 'setMeName'
+    }),
+
+    join () {
+      this.setMeName(this.name)
     }
   }
 }

@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "attachmediastream": "^2.0.4",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.3",
     "simplewebrtc": "^3.0.1",

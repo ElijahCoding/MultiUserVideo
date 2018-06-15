@@ -5,20 +5,46 @@
         <video ref="me"></video>
       </div>
       <div class="person__name">
-        Elijah
+        {{ state.name }}
       </div>
+
+      <person v-for="client in clients" :client="client" :key="client.peer.id"></person>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters, mapMutations } from 'vuex'
+  import Person from './partials/Person'
+
   export default {
     props: {
       room: String
     },
 
+    components: {
+      Person
+    },
+
+    computed: {
+      ...mapGetters({
+        state: 'getState',
+        clients: 'getClients'
+      })
+    },
+
+    methods: {
+      ...mapMutations({
+        addPeer: 'addPeer'
+      })
+    },
+
     mounted () {
       window.webrtc.joinRoom(this.room)
+
+      window.webrtc.on('videoAdded', (video, peer) => {
+        this.addPeer({ video, peer })
+      })
 
       window.webrtc.on('localStream', (stream) => {
         let attachMediaStream = require('attachmediastream')

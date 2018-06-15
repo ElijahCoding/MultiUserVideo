@@ -10,12 +10,15 @@
 
       <person v-for="client in clients" :client="client" :key="client.peer.id"></person>
     </div>
+
+    <controls></controls>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Person from './partials/Person'
+  import Controls from './partials/Controls'
 
   export default {
     props: {
@@ -23,7 +26,8 @@
     },
 
     components: {
-      Person
+      Person,
+      Controls
     },
 
     computed: {

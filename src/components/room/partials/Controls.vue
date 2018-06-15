@@ -9,10 +9,10 @@
       </a>
     </li>
     <li class="controls__item">
-      <a href="#" class="controls__link">
+      <a href="#" class="controls__link" v-if="state.paused" @click.prevent="unpauseMe">
         Unpause me
       </a>
-      <a href="#" class="controls__link">
+      <a href="#" class="controls__link" v-else @click.prevent="pauseMe">
         Pause me
       </a>
     </li>
@@ -31,7 +31,8 @@
 
     methods: {
       ...mapMutations({
-        setMuted: 'setMuted'
+        setMuted: 'setMuted',
+        setPaused: 'setPaused'
       }),
 
       muteMe () {
@@ -42,7 +43,17 @@
       unmuteMe () {
         window.webrtc.unmute()
         this.setMuted(false)
-      }
+      },
+
+      pauseMe () {
+        window.webrtc.pause()
+        this.setPaused(true)
+      },
+
+      unpauseMe () {
+        window.webrtc.resume()
+        this.setPaused(false)
+      },
     }
   }
 </script>

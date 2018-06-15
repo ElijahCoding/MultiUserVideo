@@ -1,10 +1,10 @@
 <template>
   <ul class="controls">
     <li class="controls__item">
-      <a href="#" class="controls__link">
+      <a href="#" class="controls__link" v-if="state.muted" @click.prevent="unmuteMe">
         Unmute me
       </a>
-      <a href="#" class="controls__link">
+      <a href="#" class="controls__link" v-else @click.prevent="muteMe">
         Mute me
       </a>
     </li>
@@ -20,8 +20,30 @@
 </template>
 
 <script>
-  export default {
+  import { mapGetters, mapMutations } from 'vuex'
 
+  export default {
+    computed: {
+      ...mapGetters({
+        state: 'getState'
+      })
+    },
+
+    methods: {
+      ...mapMutations({
+        setMuted: 'setMuted'
+      }),
+
+      muteMe () {
+        window.webrtc.mute()
+        this.setMuted(true)
+      },
+
+      unmuteMe () {
+        window.webrtc.unmute()
+        this.setMuted(false)
+      }
+    }
   }
 </script>
 
